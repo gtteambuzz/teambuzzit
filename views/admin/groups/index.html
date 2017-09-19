@@ -1,0 +1,69 @@
+{% extends "admin/base.html" %}
+{% block title %}Groups &mdash; {{ group.name }}{% endblock %}
+{% block content %}
+    <h1>{% if key == "new" %}New Group{% else %}{{ group.name }}{% endif %}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ get_current_path() }}" method="POST">
+                <input type="hidden" name="group[key]" value="{{ key }}" />
+                <div class="form-group">
+                    <label for="group[name]" class="control-label">Name</label>
+                    <input type="text" name="group[name]" value="{{ group.name }}" class="form-control" autocorrect="off" />
+                    {{ validationError('group[name]') }}
+                </div>
+                <div class="form-group">
+                    <label for="group[password]" class="control-label">Password</label>
+                    <input type="text" name="group[password]" value="{{ group.password }}" class="form-control" autocorrect="off" />
+                    {{ validationError('group[password]') }}
+                </div>
+                <div class="form-group">
+                    <label for="group[project]" class="control-label">Project</label>
+                    <select name="group[project]" class="form-control">
+                        <option value="">None</option>
+                        {% for project in Project.all() %}<option value="{{ project.key() }}" {% if group.project and project.key() == group.project.key() %}selected{% endif %}>{{ project.name }}</option>{% endfor %}
+                    </select>
+                    {{ validationError('group[project]') }}
+                </div>
+                <div class="form-group">
+                    <label for="group[slots]" class="control-label">Slots</label>
+                    <input type="text" name="group[slots]" value="{{ group.slots }}" class="form-control" autocorrect="off" />
+                    {{ validationError('group[slots]') }}
+                </div>
+                <div class="form-group clearfix">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        <a href="/admin/groups" class="btn btn-default">Cancel</a>
+                    </div>
+                    <div class="pull-left">
+                        {% if key != "new" %}<a href="/admin/groups/{{ key }}/delete" class="btn btn-danger">Delete...</a>{% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if key != "new" %}
+        <div class="col-md-6">
+            <h3>Members ({{ group.members.count() }} total)</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in group.members %}
+                    <tr>
+                        <td>{{ member.getName() }}</td>
+                        <td>
+                            <div class="pull-right">
+                                <a href="/admin/volunteers/{{ member.key() }}" class="btn btn-xs btn-primary">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

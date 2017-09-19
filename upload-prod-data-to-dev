@@ -1,0 +1,2 @@
+appcfg.py upload_data --filename=prod.data --url=http://localhost:8080/remoteapi --application=dev~teambuzzapp ./
+

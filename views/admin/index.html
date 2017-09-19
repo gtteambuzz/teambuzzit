@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h1>Admin Panel</h1>
+<div class="row">
+    <div class="col-md-5">
+        <div class="list-group">
+            <a href="/admin/volunteers" class="list-group-item">Volunteers</a>
+            <a href="/admin/projects" class="list-group-item">Projects</a>
+            <a href="/admin/groups" class="list-group-item">Groups</a>
+            <a href="/admin/stats" class="list-group-item">Stats</a>
+            <a href="/admin/recalculate" class="list-group-item">Recalculate spots (in case of db failure)</a>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <p>Welcome to the TEAM Buzz administrative backend. Here is a warning: look before you leap. There are no safety measures implemented. If you delete a project, it's gone and there aren't any records of who was in it. Any volunteers that were in it, now don't have their project set.</p>
+    </div>
+</div>
+{% endblock %}

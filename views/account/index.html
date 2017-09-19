@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+
+{% if not user.is_pc %}
+    {% if user.pc_application %}
+        <div class="alert alert-warning">Thanks for applying to be a Project Coordinator. We're reviewing your application and will let you know if you get in!</div>
+    {% elif Phase.isActive("pc_apps") %}
+        <div class="alert alert-info"><strong>Go above and beyond!</strong> Project Coordinator Applications are up now. <a href="/beapc" class="alert-link">Apply here</a>.</div>
+    {% endif %}
+{% endif %}
+
+<div class="row">
+    <div class="{% if user.project %}col-md-7 col-lg-8{% else %}col-md-12{% endif %}">
+        {% if not user.project and not user.group %}
+            <div class="row text-center">
+                <div class="col-md-5">
+                    <h2><a href="/groups">Join a group</a></h2>
+                    <p>Find friends and band together.<br>Your group leader will chose your project.</p>
+                </div>
+                <div class="col-md-2">
+                    <br class="hidden-xs hidden-sm">
+                    <h3 class="text-center">⊰ OR ⊱</h3>
+                </div>
+                <div class="col-md-5">
+                    <h2><a href="/projects">Just join a project</a></h2>
+                    <p>Like a modern-day Clark or Lewis.</p>
+                </div>
+            </div>
+        {% elif user.group and not user.group.project %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Your project</h3></div>
+                <div class="panel-body">
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span>Your group, <i>{{ user.group.name }}</i>, hasn't chosen a project yet.</div>
+                    {% if user.is_group_leader %}
+                        <p><a href="/projects" class="btn btn-primary">Sign your group up for a project</a></p>
+                    {% else %}
+                        <p>Your group leader will take care of this.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% elif user.project %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Your Project</h3></div>
+                <div class="panel-body">
+                    <div><span class="h3">{{ user.project.name }}</span></div>
+                    <div><span class="label label-default">{{ user.project.type_of_work }}</span></div>
+                    <p>{{ user.project.description }}</p>
+                    <p>{{ user.project.spots_taken }} of {{ user.project.max_volunteers }} spots taken.</p>
+                    {% if user.project.volunteers %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Volunteer Name</th>
+                                    {% if user.is_pc %}<th>Email</th>{% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in user.project.volunteers %}
+                                <tr>
+                                    <td>{{ v.getName() }}
+                                        {% if v.is_pc %}<span class="label label-teambuzz">Project Coordinator</span><a href="mailto:{{ v.email }}" class="btn btn-xs btn-teambuzz pull-right">Contact via email</a>{% endif %}
+                                        {% if v.key() == user.key() %}<span class="label label-info">You</span>{% endif %}
+                                    </td>
+                                    {% if user.is_pc %}<td>{{ v.email }}</td>{% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No volunteers have joined yet</p>
+                    {% endif %}
+                    {% if user.is_pc %}
+                        <hr>
+                        <h4>Project Coordinator Tools</h4>
+                        <a href="mailto:{{ user.project.getVolunteersEmails() }}?subject=Message from your TEAM Buzz Project Coordinator" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Open email draft to volunteers</a>
+                    {% endif %}
+                    {% if user.is_group_leader or user.group == None %}
+                        <a href="/projects/leave" class="btn btn-default">Leave project</a>
+                    {% else %}
+                        <a href="/projects/leave" class="btn btn-default disabled"><s>Leave project</s></a>
+                        <p><span class="glyphicon glyphicon-info-sign"></span>Because your group must all be in the same project, in order to leave your project, you need to <a href="/groups/leave">leave your group</a> first.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% elif user.is_pc %}
+            <p>You have not been assigned a project yet.</p>
+        {% else %}
+            <h2>Oh dear! You don't have a project</h2>
+            <p>If you registered for one earlier, you might have waited too long to confirm your account, and all of the spots got taken. <a href="/projects">Join a new project</a>.</p>
+        {% endif %}
+
+        {% if user.group %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Your Group</h3></div>
+                <div class="panel-body">
+                    <p>Name: <strong>{{ user.group.name }}</strong></p>
+                    <p>Slots: <strong>{{ user.group.spots_taken }}</strong> of <strong>{{ user.group.slots }}</strong> taken</p>
+                    <p>Access code: <strong>{{ user.group.password }}</strong></p>
+                    <a href="mailto:{{ user.group.getMembersEmails() }}?subject=Message from your TEAM Buzz Group Leader" target="_blank" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Open email draft to members</a>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for member in user.group.members %}
+                        <tr>
+                            <td>{{ member.getName() }}
+                                {% if member.key() == user.key() %}<span class="label label-info">You</span>{% endif %}
+                                {% if member.is_group_leader %}<span class="label label-success">Leader</span>{% endif %}
+                            </td>
+                            <td>{{ member.email }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="2"><strong>{% if user.group.isFull() %}No spots remaining{% else %}{{ user.group.getSpotsRemaining() }} spots remaining{% endif %}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            {% if user.is_group_leader %}<a href="/groups/edit" class="btn btn-success">Edit group</a>{% endif %}
+                        </div>
+                        <div class="pull-right">
+                            <a href="/groups/leave" class="btn btn-default">Leave group...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-md-5 col-lg-4">
+        {% if user.project %}
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Where and When</h3></div>
+                <div class="panel-body">
+                    {% include 'partials/where.html' %}
+                    {% include 'partials/when.html' %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

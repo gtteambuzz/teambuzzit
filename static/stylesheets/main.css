@@ -1,0 +1,260 @@
+header + .container #content h1:first-child {
+    margin-top: 0;
+}
+
+.navbar-brand {
+    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
+    font-weight: bold;
+    font-size: 1.6em;
+    text-shadow: 1px 1px 0 #333, -1px 1px 0 #333, -1px -1px 0 #333, 1px -1px 0 #333;
+}
+
+.navbar-brand span {
+    margin-top: -20px;
+    display: inline-block;
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-top: -6%;
+    margin-right: 0.25em;
+    display: inline-block;
+}
+
+.navbar.navbar-teambuzz {
+    background-color: hsl(41, 44%, 49%);
+    border-color: hsl(41, 44%, 40%);
+    border-radius: 0;
+}
+
+.navbar-teambuzz .navbar-nav > li > a, .navbar-teambuzz .nav-ribbon li a {
+    color: white;
+}
+
+.navbar-teambuzz .navbar-nav > li > a:hover, .navbar-teambuzz .navbar-nav > li > a:focus, .navbar-teambuzz .navbar-nav > li.active > a, .navbar-teambuzz .nav-ribbon li.active a, .navbar-teambuzz .navbar-toggle:hover {
+    color: #eee;
+    background-color: hsl(41, 44%, 40%);
+}
+
+.navbar-teambuzz .navbar-brand {
+    color: white;
+}
+
+.navbar-teambuzz .navbar-brand:hover {
+    color: #eee;
+    background-color: hsl(41, 44%, 40%);
+}
+
+.navbar-teambuzz .navbar-toggle .icon-bar {
+    background-color: hsl(41, 44%, 20%);
+    background-color: white;
+}
+
+.navbar .pad-right {
+    margin-right: 1em;
+}
+
+.responsive-but-350 {
+    width: 350px;
+    max-width: 100%;
+}
+
+.table.table-calendar > tbody > tr > td {
+    vertical-align: bottom;
+    width: 14.25%;
+}
+
+.table-calendar > tbody > tr.calendar-event-week > td {
+    border-bottom-color: transparent;
+    padding-bottom: 0;
+    padding-top: 12px;
+}
+
+.table-calendar > tbody > tr.calendar-event-week + tr > td:not(:first-child) {
+    border-left-color: transparent;
+}
+
+.table-calendar > tbody > tr.calendar-event-week + tr > td:not(:last-child) {
+    border-right-color: transparent;
+}
+
+.thumbnail .table {
+    margin-bottom: 0;
+}
+
+.h3 .glyphicon {
+    top: 3px;
+}
+
+.glyphicon {
+    margin-right: 0.4em;
+}
+
+.btn.pull-right {
+    margin-left: 0.5em;
+}
+
+.btn-teambuzz {
+    background-color: hsl(41, 44%, 49%);
+    border-color: hsl(41, 44%, 40%);
+    color: white;
+}
+
+.btn-teambuzz:hover, .btn-teambuzz:focus {
+    background-color: hsl(41, 44%, 40%);
+    color: white;
+}
+
+.btn-teambuzz:active {
+    background-color: hsl(41, 44%, 40%);
+    color: white;
+}
+
+.glyphicon.pad-left {
+    margin-right: 0;
+    margin-left: 0.4em;
+}
+
+.alert.alert-form-error, .alert.alert-slim {
+    padding: 0.4em;
+    margin-bottom: 0;
+}
+
+.alert.alert-form-error {
+    margin-top: 0.2em;
+    margin-bottom: 0;
+}
+
+.alert-link {
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .form-inline .form-group + .form-group {
+        margin-left: 1em;
+    }
+}
+
+.form-group input[type=checkbox] {
+    margin-right: 0.4em;
+}
+
+.delimited-list {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.delimited-list > * {
+    display: inline-block;
+    list-style: none;
+}
+
+.delimited-list > *:not(:last-child)::after {
+    white-space: pre-wrap;
+}
+
+.delimited-list.delimited-list-comma > *:not(:last-child)::after {
+    content: ', ';
+}
+
+.delimited-list.delimited-list-dot > *:not(:last-child)::after {
+    content: ' · ';
+}
+
+/* Custom navigation type, which is good for subnavigation with minimal vertical space consumption */
+.nav-ribbon {
+}
+
+.nav-ribbon li {
+    text-align: center;
+    width: 33.3%;
+    display: block;
+    float: left;
+}
+
+.nav-ribbon li.active {
+    font-weight: bold;
+}
+
+.nav-ribbon li.active::after {
+    width: 100%;
+    height: 5px;
+    background-color: #428bca;
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.nav-ribbon li:not(:first-child) {
+    border-left: 1px solid #e7e7e7;
+}
+
+.navbar-teambuzz .nav-ribbon li:not(:first-child) {
+    border-color: hsl(41, 44%, 40%);
+}
+
+.navbar-teambuzz .nav-ribbon li.active::after {
+    background-color: hsl(41, 44%, 100%);
+}
+
+.nav-ribbon li a {
+    padding-left: 0;
+    padding-right: 0;
+    color: #777;
+}
+
+.nav-ribbon li a:hover {
+    color: #333;
+}
+
+.navbar-teambuzz .nav > li > a:active, .navbar-teambuzz .nav > li > a:hover {
+    color: white;
+    background-color: hsl(41, 44%, 40%);
+}
+
+.navbar-teambuzz .btn-link {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-teambuzz .navbar-toggle {
+    border-color: hsl(41, 44%, 40%);
+}
+
+.match-nav-border {
+    border-top: 1px solid #e7e7e7;
+}
+
+.navbar-teambuzz .match-nav-border {
+    border-color: #917539;
+}
+
+.text-muted .label {
+    -webkit-filter: grayscale(100%);
+}
+
+.label.label-teambuzz {
+    background-color: hsl(41, 44%, 49%);
+    border-color: hsl(41, 44%, 40%);
+    color: white;
+}
+
+
+.row.row-masonry {
+    -moz-column-width: 18em;
+    -webkit-column-width: 18em;
+    -moz-column-gap: 0.9em;
+    -webkit-column-gap: 0.9em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.row.row-masonry > .col-md-4 {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    float: none;
+}

@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}Projects &mdash; {{ project.name }}{% endblock %}
+{% block content %}
+    <h1>Delete <i>{{ project.name }}</i>?</h1>
+    <form action="{{ get_current_path() }}" method="POST">
+        <input type="hidden" name="project[key]" value="{{ project.key() }}" />
+        <div class="form-group">
+            <p class="form-control-static">Deleting a project will leave all its volunteers and groups with out a project, and without notifying them.</p>
+        </div>
+        <div class="form-group clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+            </div>
+            <div class="pull-left">
+                <a href="/admin/projects/{{ project.key() }}" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

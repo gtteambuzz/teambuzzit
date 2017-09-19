@@ -1,0 +1,64 @@
+<div class="h4"><span class="glyphicon glyphicon-time"></span> {{ config.DATES['day_of'] | datetime }}</div>
+<a href="" class="hidden">Add to Calendar</a>
+<div class="thumbnail responsive-but-350">
+    <table class="table table-bordered table-calendar">
+        <thead>
+            <tr>
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=1) %}label label-default{% endif %}">1</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=2) %}label label-default{% endif %}">2</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=3) %}label label-default{% endif %}">3</span></td>
+            </tr>
+            <tr>
+                <td><span class="{% if is_today(year=2015, month=10, day=4) %}label label-default{% endif %}">4</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=5) %}label label-default{% endif %}">5</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=6) %}label label-default{% endif %}">6</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=7) %}label label-default{% endif %}">7</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=8) %}label label-default{% endif %}">8</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=9) %}label label-default{% endif %}">9</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=10) %}label label-default{% endif %}">10</span></td>
+            </tr>
+            <tr>
+                <td><span class="{% if is_today(year=2015, month=10, day=11) %}label label-default{% endif %}">11</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=12) %}label label-default{% endif %}">12</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=13) %}label label-default{% endif %}">13</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=14) %}label label-default{% endif %}">14</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=15) %}label label-default{% endif %}">15</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=16) %}label label-default{% endif %}">16</span></td>
+                <td><span class="{% if is_today(year=2015, month=10, day=17) %}label label-default{% endif %}">17</span></td>
+            </tr>
+            <tr>
+                <td><span class="label label-primary">18</span></td>
+                <td>19</td>
+                <td>20</td>
+                <td>21</td>
+                <td>22</td>
+                <td>23</td>
+                <td>24</td>
+            </tr>
+            <tr>
+                <td>25</span></td>
+                <td>26</td>
+                <td>27</td>
+                <td>28</td>
+                <td>29</td>
+                <td>30</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Groups{% endblock %}
+{% block content %}
+    {% if user.group %}<div class="alert alert-info">You're already in the {{ user.group.name }} group. <a href="/account" class="alert-link">View group</a>.</div>{% endif %}
+    <h1>Groups</h1>
+	<h3>Volunteer with friends.</h3>
+    <div class="alert alert-info">Group registration closed October 15th. You can still volunteer, but all the group spots have been opened to the general public.</div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well well-sm">
+                <div><small><strong><span class="glyphicon glyphicon-filter"></span>FILTER</strong></small></div>
+                <form class="form-inline" data-filters="group">
+                    <div class="form-group">
+                        <input type="text" name="fulltext" class="form-control" placeholder="Search text anywhere..." />
+                    </div>
+                </form>
+                <small data-model-filter-notice="group" class="hidden"></small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <a class="btn btn-default disabled" href=""><s>Create a group</s></a>
+            <p class="text-info"><span class="glyphicon glyphicon-info-sign"></span>Closed October 15th</p>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr data-model="group" data-full="{% if group.isFull() %}yes{% else %}no{% endif %}">
+                <td data-name="fulltext">{{ group.name }}</td>
+                <td>
+                    <div class="pull-right">
+                        {% if group.isFull() %}
+                            <a class="btn btn-default btn-xs disabled"><del>Join group</del></a>
+                        {% else %}
+                            <a href="/groups/join?id={{ group.key() }}" class="btn btn-teambuzz btn-xs">Join group</a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

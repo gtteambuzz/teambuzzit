@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Groups{% endblock %}
+{% block content %}
+    <div class="clearfix">
+        <div class="pull-left">
+            <h1>Groups</h1>
+        </div>
+        <div class="pull-right">
+            <a href="/admin/groups/new" class="btn btn-success">New group</a>
+            <a href="mailto:{{ leaders_emails }}" class="btn btn-default">Email all group leaders</a>
+            <a href="/admin/groups/delete" class="btn btn-default">Delete all...</a>
+            <a href="/admin/groups/close-registration" class="btn btn-default">Set slots to current sizes...</a>
+        </div>
+    </div>
+    <div class="well well-sm">
+        <div><small><strong><span class="glyphicon glyphicon-filter"></span>FILTER</strong></small></div>
+        <form class="form-inline" data-filters="group">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Search name..." />
+            </div>
+            <div class="form-group">
+                <input type="text" name="project" class="form-control" placeholder="Search project name..." />
+            </div>
+        </form>
+        <small data-model-filter-notice="group" class="hidden"></small>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Project</th>
+            <th>Slots</th>
+            <th>Slots Taken</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr data-model="group">
+                <td data-name="name">{{ group.name }}</a></td>
+                <td data-name="password">{{ group.password }}</td>
+                <td data-name="project">{% if group.project %}<a href="/admin/projects/{{ group.project.key() }}">{{ group.project.name  }}</a>{% else %}None{% endif %}</td>
+                <td data-name="slots">{{ group.slots }}</td>
+                <td data-name="slots_taken">{{ group.spots_taken }}</td>
+                <td><a href="/admin/groups/{{ group.key() }}" class="btn btn-xs btn-primary">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

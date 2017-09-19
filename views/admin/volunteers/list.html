@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% block title %}Volunteers{% endblock %}
+{% block content %}
+    <div class="clearfix">
+        <div class="pull-left">
+            <h1>Volunteers</h1>
+        </div>
+        <div class="pull-right">
+            <a href="/admin/volunteers/clear-flags" class="btn btn-default">Clear PCs and group leaders...</a>
+            <a href="/admin/volunteers.csv" class="btn btn-default">Generate CSV</a>
+        </div>
+    </div>
+    <div class="well well-sm">
+        <div><small><strong><span class="glyphicon glyphicon-filter"></span>FILTER</strong></small></div>
+        <form class="form-inline" data-filters="volunteer">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Search name..." />
+            </div>
+            <div class="form-group">
+                <input type="text" name="phone" class="form-control" placeholder="Search phone..." />
+            </div>
+            <div class="form-group">
+                <input type="text" name="email" class="form-control" placeholder="Search email..." />
+            </div>
+            <div class="form-group">
+                <input type="text" name="project" class="form-control" placeholder="Search project..." />
+            </div>
+            <div class="form-group">
+                <input type="text" name="group" class="form-control" placeholder="Search group..." />
+            </div>
+        </form>
+        <small data-model-filter-notice="volunteer" class="hidden"></small>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Project</th>
+            <th>Group</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for volunteer in volunteers %}
+            <tr data-model="volunteer">
+                <td data-name="name">{{ volunteer.getName() }}
+                    {% if volunteer.pending %}<span class="label label-warning">pending</span>{% endif %}
+                    {% if volunteer.is_pc %}<span class="label label-primary">PC</span>{% endif %}
+                    {% if volunteer.is_group_leader %}<span class="label label-success">group leader</span>{% endif %}
+                </td>
+                <td data-name="email"><a href="mailto:{{ volunteer.email }}">{{ volunteer.email }}</a></td>
+                <td data-name="phone">{{ volunteer.phone }}</td>
+                <td data-name="project">{% if volunteer.project %}<a href="/admin/projects/{{ volunteer.project.key() }}">{{ volunteer.project.name  }}</a>{% else %}None{% endif %}</td>
+                <td data-name="group">{% if volunteer.group %}<a href="/admin/groups/{{ volunteer.group.key() }}">{{ volunteer.group.name  }}</a>{% else %}None{% endif %}</td>
+                <td><a href="/admin/volunteers/{{ volunteer.key() }}" class="btn btn-xs btn-primary">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

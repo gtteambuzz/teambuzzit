@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+    <div class="clearfix">
+        <div class="pull-left">
+            <h1>Projects</h1>
+        </div>
+        <div class="pull-right">
+            <a href="/admin/projects/new" class="btn btn-success">New project</a>
+            <a href="/admin/projects/delete" class="btn btn-default">Delete all...</a>
+        </div>
+    </div>
+    <div class="well well-sm">
+        <div><small><strong><span class="glyphicon glyphicon-filter"></span>FILTER</strong></small></div>
+        <form class="form-inline" data-filters="project">
+            <div class="form-group">
+                <select class="form-control" name="full">
+                    <option value="no">Open Projects</option>
+                    <option selected value="">All Projects</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="type">
+                    <option value="">Any Type</option>
+                    {% for type in Project.getAllTypes() %}<option value="{{ type }}">{{ type }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" name="fulltext" class="form-control" placeholder="Search text anywhere..." />
+            </div>
+        </form>
+        <small data-model-filter-notice="project" class="hidden"></small>
+    </div>
+    <div class="row row-masonry">
+        {% for project in projects %}
+            <div class="col-md-4" data-model="project" data-full="{% if project.isFull() %}yes{% else %}no{% endif %}">
+                 <div class="panel panel-default {% if project.isFull() %}text-muted{% endif %}">
+                    <div class="panel-body">
+                        <div><span class="h3" data-name="fulltext">{{ project.name }}</span></div>
+                        <div><span class="label label-{{ project.getLabelForType() }}" data-name="type" data-name="fulltext">{{ project.type_of_work }}</span></div>
+                        <p data-name="fulltext">{{ project.description }}</p>
+                        <p>{{ project.spots_taken }} of {{ project.max_volunteers }} spots taken</p>
+                        <a href="/admin/projects/{{ project.key() }}" class="btn btn-primary">Edit project</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

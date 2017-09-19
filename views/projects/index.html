@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+    {% if user.project %}<div class="alert alert-info">You're already registered for the {{ user.project.name }} project. <a href="/account" class="alert-link">View project</a>.</div>{% endif %}
+    <h1>Big List of Projects</h1>
+	<h3>Make a difference in Atlanta.</h3>
+    <div class="well well-sm">
+        <div><small><strong><span class="glyphicon glyphicon-filter"></span>FILTER</strong></small></div>
+        <form class="form-inline" data-filters="project">
+            <div class="form-group">
+                <select class="form-control" name="full">
+                    <option default value="no">Open Projects</option>
+                    <option value="">All Projects</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="type">
+                    <option value="">Any Type</option>
+                    {% for type in Project.getAllTypes() %}<option value="{{ type }}">{{ type }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" name="fulltext" class="form-control" placeholder="Search text anywhere..." />
+            </div>
+        </form>
+        <small data-model-filter-notice="project" class="hidden"></small>
+    </div>
+    <div class="row row-masonry">
+        {% for project in projects %}
+            <div class="col-md-4" data-model="project" data-full="{% if project.isFull() %}yes{% else %}no{% endif %}">
+                 <div class="panel panel-default {% if project.isFull() %}text-muted{% endif %}">
+                    <div class="panel-body">
+                        <div><span class="h3" data-name="fulltext">{{ project.name }}</span></div>
+                        <div><span class="label label-{{ project.getLabelForType() }}" data-name="type" data-name="fulltext">{{ project.type_of_work }}</span></div>
+                        <p data-name="fulltext">{{ project.description }}</p>
+                        {% if project.getSpotsRemaining() < (user.group.slots if user.group and user.is_group_leader else 1) %}
+                            <a class="btn btn-default disabled"><del>Join project</del></a>
+                            <p>{% if project.isFull() %}Project's volunteer capacity reached{% else %}Project is too small for your group{% endif %}</p>
+                        {% else %}
+                            <form action="/projects/join" method="post">
+                                <input type="hidden" name="id" value="{{ project.key() }}" />
+                                <button type="submit" class="btn btn-teambuzz">Join project {% if user.is_group_leader %}for group{% endif %}</button>
+                            </form>
+                            {% if project.isAlmostFull() %}
+                                <p class="text-danger">{{ project.getSpotsRemaining() }} spots left!</p>
+                            {% else %}
+                                <p>{{ project.getSpotsRemaining() }} more volunteers needed</p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

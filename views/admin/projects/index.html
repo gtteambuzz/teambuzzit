@@ -1,0 +1,99 @@
+{% extends "admin/base.html" %}
+{% block title %}Projects &mdash; {{ project.name }}{% endblock %}
+{% block content %}
+    <h1>{% if key == "new" %}New Project{% else %}{{ project.name }}{% endif %}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{{ get_current_path() }}" method="POST">
+                <input type="hidden" name="project[key]" value="{{ key }}" />
+                <div class="form-group">
+                    <label for="project[name]" class="control-label">Name</label>
+                    <input type="text" name="project[name]" value="{{ project.name }}" class="form-control" autocorrect="off" />
+                    {{ validationError('project[name]') }}
+                </div>
+                <div class="form-group">
+                    <label for="project[description]" class="control-label">Description</label>
+                    <textarea class="form-control" rows="3" name="project[description]">{{ project.description }}</textarea>
+                    {{ validationError('project[description]') }}
+                </div>
+                <div class="form-group">
+                    <label for="project[location]" class="control-label">Location</label>
+                    <input type="text" name="project[location]" value="{{ project.location }}" class="form-control" autocorrect="off" />
+                    {{ validationError('project[location]') }}
+                </div>
+                <div class="form-group">
+                    <label for="project[type_of_work]" class="control-label">Type</label>
+                    <select name="project[type_of_work]" class="form-control">
+                        {% for type in Project.getAllTypes() %}<option value="{{ type }}" {% if type == project.type_of_work %}selected{% endif %}>{{ type }}</option>{% endfor %}
+                    </select>
+                    {{ validationError('project[type_of_work]') }}
+                </div>
+                <div class="form-group">
+                    <label for="project[max_volunteers]" class="control-label">Max volunteers</label>
+                    <input type="text" name="project[max_volunteers]" value="{{ project.max_volunteers }}" class="form-control" autocorrect="off" />
+                    {{ validationError('project[max_volunteers]') }}
+                </div>
+                <div class="form-group clearfix">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        <a href="/admin/projects" class="btn btn-default">Cancel</a>
+                    </div>
+                    <div class="pull-left">
+                        {% if key != "new" %}<a href="/admin/projects/{{ key }}/delete" class="btn btn-danger">Delete...</a>{% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if key != "new" %}
+        <div class="col-md-6">
+            <p class="form-control-static">{{ project.spots_taken }} of {{ project.max_volunteers }} spots taken</p>
+            <h3>Groups ({{ project.groups.count() }} total)</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Slots</th>
+                        <th>Slots taken</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in project.groups %}
+                    <tr>
+                        <td>{{ group.name }}</td>
+                        <td>{{ group.slots }}</td>
+                        <td>{{ group.spots_taken }}</td>
+                        <td>
+                            <div class="pull-right">
+                                <a href="/admin/groups/{{ group.key() }}" class="btn btn-xs btn-primary">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Volunteers ({{ project.volunteers.count() }} total)</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for volunteer in project.volunteers %}
+                    <tr>
+                        <td>{{ volunteer.getName() }}</td>
+                        <td>
+                            <div class="pull-right">
+                                <a href="/admin/volunteers/{{ volunteer.key() }}" class="btn btn-xs btn-primary">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

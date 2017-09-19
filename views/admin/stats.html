@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h1>Stats</h1>
+<h3>People with account: {{ volunteers['count'] }}</h3>
+<h5>People in a group: {{ volunteers['count_has_group'] }}</h5>
+<h5>People not in a group: {{ volunteers['count_no_group'] }}</h5>
+<h5>People signed up for a project: {{ volunteers['count_has_project'] }}</h5>
+<h5>People not signed up for a project: {{ volunteers['count_no_project'] }}</h5>
+<h3>Groups: {{ groups['count'] }}</h3>
+<h5>Total spots in groups: {{ groups['total_spots'] }}</h5>
+<h5>Spots actually taken by people: {{ groups['spots_taken'] }}</h5>
+<h5>Unused spots: {{ groups['unused_spots'] }}</h5>
+<h3>Projects: {{ projects['count'] }}</h3>
+<h5>Total spots available in projects: {{ projects['total_spots'] }}</h5>
+<h5>Spots reserved by groups or actual people: {{ projects['spots_taken'] }}</h5>
+<h5>Unused spots: {{ projects['unused_spots'] }}</h5>
+{% endblock %}

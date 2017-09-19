@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    <h1>Form a Group</h1>
+    {% if not user %}
+        <p>To form a group, you must be signed up.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Don't have an account?</h3>
+                <a href="{{ make_path('/sign-up', {'error': 2345, 'email': email, 'redirect': get_current_path()}) }}" class="btn btn-teambuzz btn-lg btn-block">Sign yourself up</a>
+            </div>
+            <div class="col-md-6">
+                <h3>Already have account?</h3>
+                <p><a href="{{ make_path('/sign-in', {'error': 2345, 'email': email, 'redirect': get_current_path()}) }}" class="btn btn-default btn-lg btn-block">Sign in</a></p>
+                {% if suggested_user %}<div class="alert alert-info">We found an account with the email {{ email }}</div>{% endif %}
+            </div>
+        </div>
+    {% else %}
+        {% if user.is_pc %}<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span><strong>You are a Project Coordinator. You can't be both a group leader (by creating a group) and be a Project Coordinator.</strong></div>{% endif %}
+        {% if user.group %}<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span><strong>You're already in a group, so you can't create another.</strong></div>{% endif %}
+        <p>Save spots for you and your friends. Join a project all at once, so you can spend the day improving Atlanta together.</p>
+        <form action="/groups/create" method="post">
+            <div class="form-group">
+                <label for="name">Group name</label>
+                <input id="name" type="text" name="name" value="{{ name }}" class="form-control" />
+                {{ validationError('name') }}
+            </div>
+            <div class="form-group">
+                <label for="slots">Spots to reserve (max 30)</label>
+                <input id="slots" type="number" name="slots" value="{{ slots }}" class="form-control" />
+                {{ validationError('slots') }}
+                <p class="help-block">If you have many people, try forming a few groups so it will be easier to find a project that accomodates.</p>
+            </div>
+            <div class="form-group">
+                <label for="password">Access passcode</label>
+                <input id="password" type="text" name="password" value="{{ password }}" class="form-control" />
+                {{ validationError('password') }}
+                <p class="help-block">People must enter this code when joining your group. Make it memorable, but not guessable.</p>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-teambuzz btn-md btn-block">Form group<span class="glyphicon glyphicon-arrow-right pad-left"></span></button>
+            </div>
+        </form>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

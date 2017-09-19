@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}Groups &mdash; {{ group.name }}{% endblock %}
+{% block content %}
+    <h1>Delete <i>{{ group.name }}</i>?</h1>
+    <form action="{{ get_current_path() }}" method="POST">
+        <input type="hidden" name="group[key]" value="{{ group.key() }}" />
+        <div class="form-group">
+            <p class="form-control-static">Deleting a group will leave all its members without a group, and will remove its members from the project.</p>
+        </div>
+        <div class="form-group clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+            </div>
+            <div class="pull-left">
+                <a href="/admin/groups/{{ group.key() }}" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

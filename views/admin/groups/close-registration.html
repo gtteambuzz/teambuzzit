@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}Delete all groups{% endblock %}
+{% block content %}
+    <h1>Set all group sizes to the number of current members?</h1>
+    <form action="{{ get_current_path() }}" method="POST">
+        <div class="form-group">
+            <label for="verification" class="control-label">Verification (type "close group registration")</label>
+            <input type="text" name="verification" value="{{ verification }}" class="form-control" autocorrect="off" autocomplete="off" />
+            {{ validationError('verification') }}
+        </div>
+        <div class="form-group clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-danger pull-right">Downsize all groups</button>
+            </div>
+            <div class="pull-left">
+                <a href="/admin/groups" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

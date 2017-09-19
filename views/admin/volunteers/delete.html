@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}Delete Volunteer &mdash; {{ volunteer.getName() }}{% endblock %}
+{% block content %}
+    <h1>Delete <i>{{ volunteer.getName() }}</i>?</h1>
+    <form action="{{ get_current_path() }}" method="POST">
+        <input type="hidden" name="volunteer[key]" value="{{ volunteer.key() }}" />
+        <div class="form-group">
+            <p class="form-control-static">Deleting a volunteer will remove them from their group, and their project. If they're the sole project coordinator, or group leader, then this action could abandon the group or project without an administrative agent.</p>
+        </div>
+        <div class="form-group clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+            </div>
+            <div class="pull-left">
+                <a href="/admin/volunteers/{{ volunteer.key() }}" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% macro validationError(name) -%}
+    {% if errors[name] %}<div class="alert alert-danger alert-form-error">{{ errors[name] }}</div>{% endif %}
+{%- endmacro %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ include_static_asset('/stylesheets/main.css') }}" />
+        <title>TEAM Buzz {% block title %}{{ config.DATES['day_of'] | date('short') }}{% endblock %}</title>
+        <meta property="og:title" content="TEAM Buzz {{ config.DATES['day_of'] | date('%Y on %B %d') }}" />
+        <meta property="og:description" content="Volunteer in Georgia Tech's largest day of community service" />
+        <meta property="og:image" content="{{ make_path('/images/coverphoto.png', {}, True) }}" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-teambuzz" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{% block root_url %}{% endblock %}"><img src="/images/buzz-icon-transparent.png" alt="" /><span>{% block brand %}{% endblock %}</span></a>
+                        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        {% block navbarheader %}{% endblock %}
+                        {% if not user %}<a href="/sign-in" class="hide btn btn-default navbar-btn pad-right pull-right">Sign In</a>{% endif %}
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        {% block navbarnav %}{% endblock %}
+                    </div>
+                </div>
+                {% if not hide_subnav %}
+                    {% block navbarsubnav %}{% endblock %}
+                {% endif %}
+            </nav>
+        </header>
+        <div class="container">
+            <div id="content">
+                {% for flash_type, message in flashes %}
+                    <div class="alert alert-{{ flash_type }}">{{ message }}</div>
+                {% endfor %}
+                {% block content %}{% endblock %}
+            </div>
+            <hr>
+            <footer class="text-center text-muted">
+                <ul class="delimited-list delimited-list-dot">
+                    <li>&copy; TEAM Buzz</li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </footer>
+            <br>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ include_static_asset('/scripts/base.js') }}"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

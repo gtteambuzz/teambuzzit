@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center">Get Involved in TEAM Buzz</h1>
+<div class="row">
+    <div class="col-md-4">
+        <h4>Just Volunteer!</h4>
+        <p>Simply join a project and show up. Sign-up early to get your favorite project!</p>
+        <a href="/projects" class="btn btn-teambuzz">Pick your project now</a>
+    </div>
+    <div class="col-md-4">
+        <h4>Form a Group</h4>
+        <p>Spend TEAM Buzz with your friends by forming a group. Be a group leader and choose the project for your group.</p>
+        <a class="btn btn-default disabled" href=""><s>Volunteer with friends</s></a>
+        <p class="text-info"><span class="glyphicon glyphicon-info-sign"></span>Closed October 15th</p>
+    </div>
+    <div class="col-md-4">
+        <h4>Be a Project Coordinator</h4>
+        <p>Play an integral role in TEAM Buzz by acting as a liaison between TEAM Buzz Exec, the project's organization, and the volunteers.</p>
+        <a href="" class="btn btn-default disabled"><s>Apply to be a PC</s></a>
+        <p class="text-info"><span class="glyphicon glyphicon-info-sign"></span>Closed October 2nd</p>
+    </div>
+</div>
+<br>
+<h1 class="text-center">When and Where</h1>
+<div class="row">
+    <div class="col-md-5 col-md-offset-1 col-sm-6">
+        {% include 'partials/when.html' %}
+    </div>
+    <div class="col-md-5 col-md-offset-1 col-sm-6">
+        {% include 'partials/where.html' %}
+    </div>
+</div>
+<h3>Mission and Purpose</h3>
+<p>TEAM Buzz is an organization devoted to making Atlanta better. Through our corporate and campus sponsorships, we are able to support many community-enhancing projects every year.</p>
+<p>The concept is simple: provide a service day that acts as a focal point and allows our campus to come together to serve. Together, we work to fulfill our motto of "Progress and Service" with a single plan and strategy to improve our community.</p>
+<!--
+<h3>Sponsors</h3>
+-->
+{% endblock %}

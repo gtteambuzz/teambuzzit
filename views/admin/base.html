@@ -1,0 +1,14 @@
+{% extends "core.html" %}
+{% block root_url %}/admin{% endblock %}
+{% block brand %}Admin{% endblock %}
+{% block navbarnav %}
+    {% if user %}
+        <ul class="nav navbar-nav">
+            <li class="{% if url_is('/admin', true) %}active{% endif %}"><a href="/admin">Home</a></li>
+            <li class="{% if url_is('/admin/volunteers') %}active{% endif %}"><a href="/admin/volunteers">Volunteers</a></li>
+            <li class="{% if url_is('/admin/projects') %}active{% endif %}"><a href="/admin/projects">Projects</a></li>
+            <li class="{% if url_is('/admin/groups') %}active{% endif %}"><a href="/admin/groups">Groups</a></li>
+            <li class="{% if url_is('/admin/stats') %}active{% endif %}"><a href="/admin/stats">Stats</a></li>
+        </ul>
+    {% endif %}
+{% endblock %}
